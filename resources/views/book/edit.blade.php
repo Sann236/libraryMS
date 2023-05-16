@@ -33,6 +33,16 @@
                             @enderror
                         </div>
                         <div class="form-group">
+                            <label>Quantity</label>
+                            <input type="number" class="form-control @error('quantity') isinvalid @enderror"
+                                placeholder="Enter amount of books" name="quantity" value="{{ $book->quantity }}" >
+                            @error('quantity')
+                                <div class="alert alert-danger" role="alert">
+                                    {{ $message }}
+                                </div>
+                            @enderror
+                        </div>
+                        <div class="form-group">
                             <label>Category</label>
                             <select class="form-control @error('category_id') isinvalid @enderror " name="category_id"
                                 >

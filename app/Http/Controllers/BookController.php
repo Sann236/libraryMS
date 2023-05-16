@@ -47,6 +47,7 @@ class BookController extends Controller
         $book->author_id = $request->author_id;
         $book->category_id = $request->category_id;
         $book->publisher_id = $request->publisher_id;
+        $book->quantity = $request->quantity;
         $book->status = 'Y';
         $book->save();
 
@@ -73,6 +74,7 @@ class BookController extends Controller
     {
         $book = Book::find($id);
         $book->name = $request->name;
+        $book->quantity = $request->quantity;
         $book->author_id = $request->author_id;
         $book->category_id = $request->category_id;
         $book->publisher_id = $request->publisher_id;

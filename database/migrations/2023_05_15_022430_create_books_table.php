@@ -18,6 +18,7 @@ return new class extends Migration
             $table->foreignId('category_id')->constrained();
             $table->foreignId('author_id')->nullable()->constrained()->onDelete('cascade');
             $table->foreignId('publisher_id')->nullable()->constrained()->onDelete('cascade');
+            $table->integer('quantity');
             $table->string('status')->default('Y');
             $table->timestamps();
         });

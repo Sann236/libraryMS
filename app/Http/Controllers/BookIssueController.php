@@ -41,7 +41,12 @@ class BookIssueController extends Controller
         $data->save();
 
         $book = Book::find($request->book_id);
-        $book->status = 'N';
+        // subtracting book quantity
+        $book->quantity--;
+        if($book->quantity == 0) {
+            $book->status = 'N';
+        }
+        
         $book->save();
 
         $usercount = BookIssue::where([
@@ -77,16 +82,17 @@ class BookIssueController extends Controller
     public function update(Request $request, $id)
     {
 
-        $book = BookIssue::find($id);
-        $book->issue_status = 'Y';
-        $book->return_day = now();
+        $book_issue = BookIssue::find($id);
+        $book_issue->issue_status = 'Y';
+        $book_issue->return_day = now();
+        $book_issue->save();
+        $book = Book::find($book_issue->book_id);
+        $book->quantity++;
+        $book->status = 'Y';
         $book->save();
-        $bookk = Book::find($book->book_id);
-        $bookk->status = 'Y';
-        $bookk->save();
 
         // updating user status 
-        $user = User::find($book->user_id);
+        $user = User::find($book_issue->user_id);
         $user->status = 'Y';
         $user->save();
 
@@ -96,13 +102,14 @@ class BookIssueController extends Controller
     public function destroy($id)
     {
 
-        $book = BookIssue::find($id);
-        $bookk = Book::find($book->book_id);
-        $bookk->status = 'Y';
-        $bookk->save();
+        $book_issue = BookIssue::find($id);
+        $book = Book::find($book_issue->book_id);
+        
+        $book->status = 'Y';
+        $book->save();
         BookIssue::find($id)->delete();
         // updating user status 
-        $user = User::find($book->user_id);
+        $user = User::find($book_issue->user_id);
         $user->status = 'Y';
         $user->save();
 
