@@ -26,7 +26,7 @@ class HomeController extends Controller
     public function index(): View
     {
         return view('home',[
-            'books' => Book::paginate(5)
+            'books' => Book::paginate(10)
         ]);
     } 
   
