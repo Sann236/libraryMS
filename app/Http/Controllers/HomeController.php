@@ -1,7 +1,8 @@
 <?php
   
 namespace App\Http\Controllers;
- 
+
+use App\Models\Book;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
   
@@ -24,7 +25,9 @@ class HomeController extends Controller
      */
     public function index(): View
     {
-        return view('home');
+        return view('home',[
+            'books' => Book::paginate(5)
+        ]);
     } 
   
     /**

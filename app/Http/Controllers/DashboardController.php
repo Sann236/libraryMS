@@ -9,6 +9,7 @@ use App\Models\BookIssue;
 use App\Models\Category;
 use App\Models\Publisher;
 use App\Models\Student;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -22,7 +23,7 @@ class DashboardController extends Controller
             'publishers' => Publisher::count(),
             'categories' => Category::count(),
             'books' => Book::count(),
-            'students' => Student::count(),
+            'students' => User::where('type', 'user')->latest()->get()->count(),
             'issued_books' => BookIssue::count(),
         ]);
     }

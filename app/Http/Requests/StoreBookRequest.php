@@ -23,7 +23,7 @@ class StoreBookRequest extends FormRequest
     {
         return [
             //
-            'image' => 'required',
+            'image' => 'required|mimes:jpeg,jpg,png,gif|max:1000',
             'name' => 'required',
             'category_id' => 'required',
             'author_id' => 'required',

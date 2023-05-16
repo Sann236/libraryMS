@@ -23,21 +23,23 @@ class StudentController extends Controller
     }
 
     public function store(StoreStudentRequest $request) {
-        Student::create($request->validated());
+        User::create($request->validated());
         return redirect()->route('students');
     }
 
-    public function edit(Student $student) {
+    public function edit(User $student) {
+        
         return view('student.edit', [
             'student' => $student
         ]);
     }
 
     public function update(UpdateStudentRequest $request, $id) {
-        $student = Student::find($id);
+        
+        $student = User::find($id);
         $student->name = $request->name;
         $student->email = $request->email;
-        
+        $student->phone = $request->phone;
         
         $student->update();
 
@@ -45,7 +47,7 @@ class StudentController extends Controller
     }
 
     public function destroy($id) {
-        Student::find($id)->delete();
+        User::find($id)->delete();
         return redirect()->route('students');
     }
 }

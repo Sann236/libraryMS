@@ -7,6 +7,7 @@ use App\Models\Book;
 use App\Models\BookIssue;
 use App\Models\Settings;
 use App\Models\Student;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class BookIssueController extends Controller
@@ -22,7 +23,7 @@ class BookIssueController extends Controller
     public function create()
     {
         return view('book.issueBook_add', [
-            'students' => Student::latest()->get(),
+            'students' => User::where('type', 'user')->latest()->get(),
             'books' => Book::where('status', 'Y')->get(),
         ]);
     }
@@ -32,7 +33,7 @@ class BookIssueController extends Controller
         $issue_date = date('Y-m-d');
         $return_date = date('Y-m-d', strtotime("+" . (Settings::latest()->first()->return_days) . " days"));
         $data = new BookIssue();
-        $data->student_id = $request->student_id;
+        $data->user_id = $request->student_id;
         $data->book_id = $request->book_id;
         $data->issue_date = $issue_date;
         $data->return_date = $return_date;
