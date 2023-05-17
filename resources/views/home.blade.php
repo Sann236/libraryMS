@@ -90,28 +90,32 @@
 
 <div class="container mb-5">
     <h1 class="text-center mb-4">Search book</h1>
-    <form id="myForm" method="post" class="d-flex justify-content-center">
-      <div class="form-group w-25 mx-3">
-        
-        <select class="form-control" id="author" name="author" required>
-          <option value="">Select an author</option>
-          <option value="author1">Author 1</option>
-          <option value="author2">Author 2</option>
-          <option value="author3">Author 3</option>
-        </select>
-      </div>
-      <div class="form-group w-25 mx-3">
-        
-        <select class="form-control " id="category" name="category" required>
-          <option value="">Select a category</option>
-          <option value="category1">Category 1</option>
-          <option value="category2">Category 2</option>
-          <option value="category3">Category 3</option>
-        </select>
-      </div>
-      <button type="submit" class="btn btn-primary mx-3">Submit</button>
+    <form id="myForm" method="get" class="d-flex justify-content-center" action="{{route('home')}}" >
+        <div class="form-group w-25 mx-3">
+
+            <select class="form-control" id="author" name="author" >
+                <option value="">Select Author</option>
+                @foreach ($authors as $author)
+                
+                <option value="{{ $author->id }}" {{ request()->author == $author->id ? 'selected': '' }} >{{ $author->name }}</option>
+                
+                @endforeach
+            </select>
+        </div>
+        <div class="form-group w-25 mx-3">
+
+            <select class="form-control " id="category" name="category" >
+                <option value="">Select Category</option>
+                @foreach ($categories as $category)
+                
+                <option value="{{ $category->id }}" {{ request()->category == $category->id ? 'selected': '' }}>{{ $category->name }}</option>
+                
+                @endforeach
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary mx-3">Submit</button>
     </form>
-  </div>
+</div>
 
 
 
@@ -410,7 +414,7 @@
     </div>
     <div class="d-flex justify-content-center mt-4">
         <div>
-        {{ $books->links() }}
+            {{ $books->links() }}
         </div>
     </div>
 

@@ -12,10 +12,15 @@
                     <form class="yourform" action="{{ route('book.update', $book->id) }}" method="post"
                         autocomplete="off" enctype="multipart/form-data">
                         @csrf
-                        <div class="form-group">
+                        <div class="form-group mb-2">
+                            <div class="text-center">
+                            <img src="{{ asset('storage/images/books/' . $book->image) }}" width="100px" height="130px" alt = "book" />
+                            </div>
+                            <div>
                             <label>Choose Image</label><br>
-                            <input type="file" name="image">
-                            <!-- <img src="{{ asset('storage/images/books/' . $book->image) }}" width="50px" height="50px" alt = "book" /> -->
+                            <input type="file" name="image" value="{{$book->image}}" >
+                            </div>
+                            
                             @error('image')
                                 <div class="alert alert-danger" role="alert">
                                     {{ $message }}
