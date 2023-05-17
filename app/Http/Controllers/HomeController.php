@@ -29,31 +29,42 @@ class HomeController extends Controller
     {
         $author = request()->author;
         $category = request()->category;
-        if($author && $category) {
+        $available = request()->available;
+
+        if($author && $category && $available) {
             $data = Book::when($author, function($query) {
 
                 $author = request()->author;
                 $category = request()->category;
+                $available = request()->available;
                
                 $query->orWhere("author_id", "=", "$author")
-                ->where("category_id", "=", "$category");
+                ->where("category_id", "=", "$category")->where("status", "=", "$available");
                
                 })->when($category, function($query) {
 
                    $author = request()->author;
                    $category = request()->category;
-                  
+                   $available = request()->available;
                    $query->orWhere("category_id", "=", "$category")
-                       ->where("author_id", "=", "$author");
+                       ->where("author_id", "=", "$author")->where("status", "=", "$available");
                   
-                   })->paginate(10);
+                   })->when($available, function($query) {
+
+                    $author = request()->author;
+                    $category = request()->category;
+                    $available = request()->available;
+                    $query->orWhere("status", "=", "$available")
+                        ->where("author_id", "=", "$author")->where("category_id", "=", "$category");
+                   
+                    })->paginate(10);
         }else {
             $data = Book::when($author, function($query) {
 
                 $author = request()->author;
                 
                
-                $query->orWhere("author_id", "=", "$author");
+                $query->where("author_id", "=", "$author");
                 
                
                 })->when($category, function($query) {
@@ -61,10 +72,18 @@ class HomeController extends Controller
                    
                    $category = request()->category;
                   
-                   $query->orWhere("category_id", "=", "$category");
+                   $query->where("category_id", "=", "$category");
                        
                   
-                   })->paginate(10);
+                   })->when($available, function($query) {
+
+                   
+                    $available = request()->available;
+                   
+                    $query->where("status", "=", "$available");
+                        
+                   
+                    })->paginate(10);
         }
         
         return view('home',[

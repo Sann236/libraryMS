@@ -53,9 +53,7 @@ class BookController extends Controller
 
 
 
-        // Book::create($request->validated() + [
-        //     'status' => 'Y'
-        // ]);
+        
         return redirect()->route('books');
     }
 
@@ -81,8 +79,6 @@ class BookController extends Controller
 
         if ( $request->hasFile("image")) {
             Storage::delete("public/images/books/".$book->image);
-
-            // $newName = uniqid()."_book.".$request->file("image")->extension();
             $newName = $request->file('image')->getClientOriginalName();
 
             $request->file("image")->storeAs("public/images/books", $newName);
@@ -91,23 +87,6 @@ class BookController extends Controller
         }
 
         $book->update();
-
-
-        // $book->name = $request->name;
-        // $book->author_id = $request->author_id;
-        // $book->category_id = $request->category_id;
-        // $book->publisher_id = $request->publisher_id;
-
-        // if ($request->hasFile('image')) {
-        //     $destination = 'public/images/books/' . $book->image;
-        //     if (File::exists($destination)) {
-        //         File::delete($destination);
-        //     }
-        //     $image = $request->file('image');
-        //     $image_name = $image->getClientOriginalName();
-        //     $image->storeAs('public/images/books', $image_name);
-        //     $book->image = $image_name;
-        // }
 
         
         

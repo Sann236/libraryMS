@@ -90,28 +90,34 @@
 
 <div class="container mb-5">
     <h1 class="text-center mb-4">Search book</h1>
-    <form id="myForm" method="get" class="d-flex justify-content-center" action="{{route('home')}}" >
+    <form id="myForm" method="get" class="d-flex justify-content-center" action="{{route('home')}}">
         <div class="form-group w-25 mx-3">
-
-            <select class="form-control" id="author" name="author" >
+            
+            <select class="form-control" id="author" name="author">
                 <option value="">Select Author</option>
                 @foreach ($authors as $author)
-                
-                <option value="{{ $author->id }}" {{ request()->author == $author->id ? 'selected': '' }} >{{ $author->name }}</option>
-                
+
+                <option value="{{ $author->id }}" {{ request()->author == $author->id ? 'selected': '' }}>{{ $author->name }}</option>
+
                 @endforeach
             </select>
         </div>
         <div class="form-group w-25 mx-3">
-
-            <select class="form-control " id="category" name="category" >
+            
+            <select class="form-control " id="category" name="category">
                 <option value="">Select Category</option>
                 @foreach ($categories as $category)
-                
+
                 <option value="{{ $category->id }}" {{ request()->category == $category->id ? 'selected': '' }}>{{ $category->name }}</option>
-                
+
                 @endforeach
             </select>
+        </div>
+        <div class="form-check mt-2">
+            <input class="form-check-input" type="checkbox" value="Y" name="available" id="flexCheckChecked" {{ request()->available  ? 'checked': '' }}>
+            <label class="form-check-label" for="flexCheckChecked">
+                Available books
+            </label>
         </div>
         <button type="submit" class="btn btn-primary mx-3">Submit</button>
     </form>
